@@ -3,6 +3,7 @@ import { BackBtnHeader } from '@/components/atom/BackBtnHeader';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { FolderCount, SortingBox } from '@/components/atom/Folder';
 import { tapeDummyData } from '@/types';
+import Image from 'next/image';
 
 const index = () => {
   return (
@@ -31,7 +32,14 @@ const index = () => {
           {tapeDummyData.map((item) => (
             <ItemBox>
               <Letter>
-                <img />
+                <Image
+                  src={`/images/playlist/${item.is_read ? 'read' : 'notRead'}_${
+                    item.color
+                  }.png`}
+                  alt='letter'
+                  width={85}
+                  height={75}
+                />
               </Letter>
               <InfoWrap>
                 <div>
@@ -99,7 +107,6 @@ const ItemBox = styled.div`
 const Letter = styled.div`
   width: 85px;
   height: 75px;
-  background-color: pink;
 `;
 
 const CardBoxWrap = styled.div`

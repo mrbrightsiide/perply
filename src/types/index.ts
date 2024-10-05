@@ -16,12 +16,11 @@ export type TTapeColor =
   | 'purple'
   | 'blue'
   | 'skyblue'
-  | 'mint'
-  | 'lime'
+  | 'green'
   | 'yellow'
   | 'pink'
-  | 'hotpink'
-  | 'grapefruit';
+  | 'red'
+  | 'cyan';
 
 export interface ITape {
   id: number;
@@ -85,7 +84,7 @@ export const tapeDummyData: ITape[] = [
     like: 1,
     is_read: false,
     created_at: '2024-10-03T02:05:17.542127Z',
-    color: 'blue',
+    color: 'green',
     album_cover_url:
       'https://visla.kr/wp/wp-content/uploads/2022/11/210260257_492056461875169_1648387615546901397_n.jpg',
   },
@@ -100,7 +99,7 @@ export const tapeDummyData: ITape[] = [
     like: 1,
     is_read: true,
     created_at: '2024-10-03T02:10:13.597026Z',
-    color: 'lime',
+    color: 'green',
     album_cover_url:
       'https://visla.kr/wp/wp-content/uploads/2022/11/210260257_492056461875169_1648387615546901397_n.jpg',
   },
@@ -115,7 +114,7 @@ export const tapeDummyData: ITape[] = [
     like: 1,
     is_read: true,
     created_at: '2024-10-03T03:22:20.963271Z',
-    color: 'grapefruit',
+    color: 'cyan',
     album_cover_url:
       'https://visla.kr/wp/wp-content/uploads/2022/11/210260257_492056461875169_1648387615546901397_n.jpg',
   },

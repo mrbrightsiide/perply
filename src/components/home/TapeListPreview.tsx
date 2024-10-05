@@ -3,7 +3,7 @@ import { ITape } from '@/types';
 import { colorChips } from '../card/ColorChip';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
-import TapeSvg from '@/../public/images/tape_yellow.svg';
+import Image from 'next/image';
 
 export const TapeListPreview = ({ data }: { data: ITape[] }) => {
   const router = useRouter();
@@ -15,7 +15,7 @@ export const TapeListPreview = ({ data }: { data: ITape[] }) => {
           css={css`
             background-color: ${colorChips.find(
               ({ name }) => name === item.color
-            )?.color || 'white'};
+            )?.listBgColor || 'white'};
           `}
           onClick={() =>
             router.push({
@@ -28,7 +28,12 @@ export const TapeListPreview = ({ data }: { data: ITape[] }) => {
             {!item.is_read && <UnreadDot top='12px' right='12px' />}
             <Flex>
               <TapeImg>
-                <TapeSvg width='100%' height='100%' />
+                <Image
+                  src={`/images/main/small_tape/${item.color}.png`}
+                  alt='tape'
+                  width={84}
+                  height={51}
+                />
               </TapeImg>
               <InfoWrap>
                 <SongTitle>{item.title}</SongTitle>
@@ -79,6 +84,9 @@ const From = styled.p`
 const TapeImg = styled.div`
   width: 124px;
   height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Flex = styled.div`

@@ -6,6 +6,7 @@ import { tapeDummyData } from '@/types';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -50,35 +51,27 @@ const Index = () => {
           {[
             {
               name: '친구들이 느끼는 나의\n분위기와 어울리는 노래',
-              color: 'lime',
               count: 0,
               id: 1,
             },
             {
               name: '친구들이 느끼는 나의\n분위기와 어울리는 노래',
-              color: 'blue',
               count: 0,
               id: 2,
             },
             {
               name: '친구들이 느끼는 나의\n분위기와 어울리는 노래',
-              color: 'mint',
               count: 0,
               id: 3,
             },
             {
               name: '친구들이 느끼는 나의\n분위기와 어울리는 노래',
-              color: 'purple',
               count: 0,
               id: 4,
             },
-          ].map((item) => (
+          ].map((item, idx) => (
             <SwiperSlide key={item.id}>
               <Tape
-                background={
-                  colorChips.find(({ name }) => name === item.color)?.color ||
-                  'white'
-                }
                 onClick={() =>
                   router.push({
                     pathname: '/playlist/detail',
@@ -88,17 +81,23 @@ const Index = () => {
               >
                 <TapeInfo>
                   <p>{item.name}</p>
-                  <div
-                    className='count'
-                    css={css`
-                      color: ${colorChips.find(
-                        ({ name }) => name === item.color
-                      )?.color || 'black'};
-                    `}
-                  >
-                    {item?.count || 0}개의 곡
-                  </div>
+                  <TransBtn>
+                    <span>{item?.count || 0}개의 곡</span>
+                  </TransBtn>
                 </TapeInfo>
+                <Image
+                  src={`/images/main/big_tape/no${idx + 1}.png`}
+                  alt='My Image'
+                  width={348}
+                  height={235}
+                  style={{
+                    position: 'absolute',
+                    top: '25px',
+                    left: '-10px',
+                    bottom: 0,
+                    zIndex: -1,
+                  }}
+                />
               </Tape>
             </SwiperSlide>
           ))}
@@ -106,7 +105,7 @@ const Index = () => {
         <PaddingWrap>
           <CardListTitle>
             <span>
-              <span>0</span>개의 음악 카드
+              <span>0개의 음악 카드</span>
             </span>
             {!isEmpty && (
               <span
@@ -157,10 +156,9 @@ const Wrapper = styled.div`
   padding-top: 40px;
 `;
 
-const Tape = styled.div<{ background: string }>`
+const Tape = styled.div`
   width: 100%;
   height: 206px;
-  background: ${({ background }) => background};
   border-radius: 20px;
   margin-top: 36px;
   display: flex;
@@ -232,14 +230,19 @@ const TapeInfo = styled.div`
     font-size: 16px;
     margin-bottom: -5px;
   }
-  .count {
-    background-color: #141414;
-    padding: 4px 8px;
-    border-radius: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: min-content;
-    align-self: flex-end;
+`;
+
+const TransBtn = styled.div`
+  padding: 4px 8px;
+  border-radius: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: min-content;
+  align-self: flex-end;
+  background-color: #161616; /* Solid background color */
+
+  > span {
+    color: #fff;
   }
 `;

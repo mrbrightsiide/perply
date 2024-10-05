@@ -31,43 +31,51 @@ export const ColorChip = ({
 export const colorChips: {
   name: TTapeColor;
   color: string;
+  listBgColor: string;
+  songBgColor?: string;
 }[] = [
   {
     name: 'purple',
     color: '#B287FF',
+    listBgColor: '#C8A7FF',
+    songBgColor: '#DFCEFF',
   },
   {
     name: 'blue',
     color: '#4096FF',
+    listBgColor: '#96C6FF',
   },
   {
     name: 'skyblue',
     color: '#29D1FF',
+    listBgColor: '#C1E0FF',
   },
   {
-    name: 'mint',
+    name: 'cyan',
     color: '#15D6CF',
+    listBgColor: '#77e7e3',
   },
   {
-    name: 'lime',
+    name: 'green',
     color: '#DCF333',
+    listBgColor: '#E8F58C',
   },
   {
     name: 'yellow',
     color: '#FFEC3D',
+    listBgColor: '#fff566',
   },
   {
     name: 'pink',
     color: '#F759AB',
+    listBgColor: '#FF85C0',
+    songBgColor: '#FFB6B7',
   },
   {
-    name: 'hotpink',
-    color: '#F759AB',
-  },
-
-  {
-    name: 'grapefruit',
+    name: 'red',
     color: '#FF4D4F',
+    listBgColor: '#FF7875',
+    songBgColor: '#FAD0E3',
   },
 ];
 
