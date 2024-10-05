@@ -11,40 +11,43 @@ export default function Home() {
   return (
     <Wrapper>
       <ColoredBackground color='#141414' />
-      <span
+      <Bg src='/images/intro_bg.png' />
+      <p
         css={css`
-          font-size: 40px;
-          color: #ffffff;
-          font-weight: 700;
-          margin: 47px 0 20px 0;
-          display: block;
+          margin-top: 40px;
         `}
       >
-        logo
-      </span>
-      <p>
-        친구들이 추천해준{'\n'}나와 어울리는 노래를 모아{'\n'}퍼스널
-        플레이리스트를{'\n'}만들어보아요
+        여러분은 서로에게{'\n'}
+        <span>어떤 음악</span>
+        인가요?
+      </p>
+      <p
+        css={css`
+          margin-top: 16px;
+        `}
+      >
+        함께 만드는{'\n'}나의 플레이리스트,{'\n'}퍼플리
       </p>
       <img
+        src='/images/logo/logo.png'
         alt='list image'
+        width={178}
         css={css`
-          width: 281px;
-          height: 183px;
-          margin: 114px 0 71px 0;
+          margin-left: -16px;
+          margin-top: 20px;
+          margin-bottom: 200px;
         `}
       />
-      <BasicButton text='로그아웃' onClick={() => signOut()} />
       <BasicButton
         onClick={() =>
           signIn('kakao', {
             callbackUrl: `/home/?userId=${session?.user.uuid}`,
           })
         }
-        text='카카오 로그인'
+        text='카카오로 시작하기'
         icon={
           <img
-            src=''
+            src='/images/kakao.png'
             alt=''
             css={css`
               width: 20px;
@@ -67,8 +70,19 @@ const Wrapper = styled.div`
 
   p {
     font-size: 16px;
-    color: #ffffff;
+    color: ${({ theme }) => theme.font.gray_04};
     white-space: pre-line;
     line-height: 24px;
+    font-weight: ${({ theme }) => theme.fontWeight.regular};
+    > span {
+      color: ${({ theme }) => theme.primary[600]};
+    }
   }
+`;
+
+const Bg = styled.img`
+  width: auto;
+  height: 99%;
+  position: absolute;
+  z-index: -1;
 `;

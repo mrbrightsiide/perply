@@ -7,6 +7,7 @@ export const BasicButton = ({
   onClick,
   buttonStyle,
   icon,
+  style,
 }: {
   text: string;
   onClick: () => void;
@@ -16,6 +17,7 @@ export const BasicButton = ({
     width?: string;
   };
   icon?: JSX.Element;
+  style?: React.CSSProperties;
 }) => {
   return (
     <Wrapper
@@ -28,6 +30,7 @@ export const BasicButton = ({
         color: ${buttonStyle?.color || '#353535'};
         width: ${buttonStyle?.width || '100%'};
       `}
+      style={style}
     >
       {icon && icon}
       {text}
