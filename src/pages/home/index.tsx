@@ -1,9 +1,7 @@
 import { BasicButton } from '@/components/atom/BasicButton';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
-import { colorChips } from '@/components/card/ColorChip';
 import { TapeListPreview } from '@/components/home/TapeListPreview';
 import { tapeDummyData } from '@/types';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -16,7 +14,7 @@ const Index = () => {
   const router = useRouter();
   const { userName } = router.query as { userName: string };
   const isMyHome = userName === session?.user?.nickname;
-  const isEmpty = false;
+  const isEmpty = true;
 
   useEffect(() => {
     if (session?.user) {
@@ -35,13 +33,20 @@ const Index = () => {
   return (
     <>
       <PaddingWrap>
-        <Header>{isMyHome ? <span>home</span> : <span>로그인</span>}</Header>
-        <Title>
-          {userName}님의{'\n'}뮤직 보관함
-        </Title>
+        <Header>
+          <img
+            src={'/images/logo/logo.png'}
+            alt='logo'
+            style={{ maxWidth: '122px', marginLeft: '-30px' }}
+          />
+          {isMyHome ? <span>마이페이지</span> : <span>로그인</span>}
+        </Header>
       </PaddingWrap>
       <Wrapper>
         <ColoredBackground color='#141414' />
+        <Title>
+          {userName}님의{'\n'}플리 보관함
+        </Title>
         <Swiper
           slidesPerView={1.14}
           spaceBetween={12}
@@ -134,7 +139,9 @@ const Index = () => {
               />
             </CardList>
           ) : (
-            <TapeListPreview data={tapeDummyData} />
+            <OverFlowBox>
+              <TapeListPreview data={tapeDummyData} />
+            </OverFlowBox>
           )}
         </PaddingWrap>
       </Wrapper>
@@ -169,6 +176,9 @@ const Header = styled.div`
   width: 100%;
   height: 56px;
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const PaddingWrap = styled.div`
@@ -191,7 +201,7 @@ const CardListTitle = styled.div`
   font-size: 18px;
   font-weight: ${({ theme }) => theme.fontWeight.medium};
   color: ${({ theme }) => theme.font.gray_04};
-  margin-top: 60px;
+  margin-top: 57px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -244,5 +254,16 @@ const TransBtn = styled.div`
 
   > span {
     color: #fff;
+  }
+`;
+
+const OverFlowBox = styled.div`
+  overflow-y: auto;
+  max-height: 310px;
+  /* scrollbar hide */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
   }
 `;

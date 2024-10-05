@@ -4,8 +4,11 @@ import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { FolderCount, SortingBox } from '@/components/atom/Folder';
 import { tapeDummyData } from '@/types';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const index = () => {
+  const router = useRouter();
+
   return (
     <>
       <BackBtnHeader background='#141414' title='받은 음악 카드' color='#fff' />
@@ -30,7 +33,14 @@ const index = () => {
         </IndexBox>
         <CardBoxWrap>
           {tapeDummyData.map((item) => (
-            <ItemBox>
+            <ItemBox
+              onClick={() =>
+                router.push({
+                  pathname: '/playlist/song',
+                  query: { id: item.id },
+                })
+              }
+            >
               <Letter>
                 <Image
                   src={`/images/playlist/${item.is_read ? 'read' : 'notRead'}_${
