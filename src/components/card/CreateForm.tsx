@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { IPlaylistData } from '@/types';
+import { IPlayList, ITape, ITapeCreate } from '@/types';
 import { TextInputWithLabel, TextAreaWithLabel } from '../atom/TextInput';
 import { SelectBox } from '../atom/SelectBox';
 import { TextInputLabel } from '../atom/TextInputLabel';
@@ -7,9 +7,11 @@ import { TextInputLabel } from '../atom/TextInputLabel';
 export const CreateForm = ({
   info,
   setInfo,
+  playListInfo,
 }: {
-  info: IPlaylistData;
-  setInfo: React.Dispatch<React.SetStateAction<IPlaylistData>>;
+  info: ITapeCreate;
+  setInfo: React.Dispatch<React.SetStateAction<ITapeCreate>>;
+  playListInfo?: IPlayList[];
 }) => {
   return (
     <BG>
@@ -22,18 +24,13 @@ export const CreateForm = ({
         />
         <div>
           <TextInputLabel label='카테고리 선택' />
-          <SelectBox
-            list={[
-              { text: '너와 분위기가 어울릴 것 같은 노래', key: 1 },
-              { text: '노래 목록 필요', key: 2 },
-              {
-                text: '노래 목록 필요',
-                key: 3,
-              },
-            ]}
-            selected={info.playlist_id}
-            setSelected={(item) => setInfo({ ...info, playlist_id: item })}
-          />
+          {playListInfo && (
+            <SelectBox
+              list={playListInfo}
+              selectedId={info.playlist_id}
+              setSelected={(item) => setInfo({ ...info, playlist_id: item.id })}
+            />
+          )}
         </div>
         <div>
           <TextInputLabel label='추천 음악' />
@@ -44,6 +41,12 @@ export const CreateForm = ({
                 width='100%'
                 height='100%'
                 alt='album cover'
+                onLoadedData={() =>
+                  setInfo({
+                    ...info,
+                    albumart_url: 'http://' + info.albumart_url,
+                  })
+                }
               />
             </AlbumCover>
             <Info>

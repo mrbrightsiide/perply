@@ -2,17 +2,17 @@ import styled from '@emotion/styled';
 import { FloatButton } from '@/components/atom/FloatButton';
 import { BackBtnHeader } from '@/components/atom/BackBtnHeader';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { IPlaylistData } from '@/types';
+import { useEffect, useState } from 'react';
+import { IPlayList, ITapeCreate } from '@/types';
 import { CreateForm } from '@/components/card/CreateForm';
 import { ColorChip, colorChips } from '@/components/card/ColorChip';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
-import { createMusicCard } from '@/apis';
+import { createMusicCard, getAllPlaylists } from '@/apis';
 
 const Index = () => {
   const router = useRouter();
   const { from, title, singer, id, albumart_url, userId } = router.query;
-  const [info, setInfo] = useState<IPlaylistData>({
+  const [info, setInfo] = useState<ITapeCreate>({
     user_name: '',
     playlist_id: 0,
     content: '',
@@ -20,8 +20,9 @@ const Index = () => {
     youtube_url: `https://www.maniadb.com/popup/youtube/${id}`,
     title: title as string,
     singer: singer as string,
-    maniadb_id: id as string,
+    color: 'purple',
   });
+  const [playListInfo, setPlayListInfo] = useState<IPlayList[]>();
 
   const onGoBackHeader = () => {
     if (from === 'create') {
@@ -34,6 +35,14 @@ const Index = () => {
     }
   };
 
+  useEffect(() => {
+    if (userId && typeof userId === 'string') {
+      (async () => {
+        await getAllPlaylists(userId).then((res) => setPlayListInfo(res));
+      })();
+    }
+  }, []);
+
   return (
     <>
       <BackBtnHeader
@@ -45,7 +54,7 @@ const Index = () => {
       <PageWrapper>
         <Tape />
         <ColorChip selectedColor={colorChips[0]} />
-        <CreateForm info={info} setInfo={setInfo} />
+        <CreateForm info={info} setInfo={setInfo} playListInfo={playListInfo} />
       </PageWrapper>
       <FloatButton
         title='음악 카드 보내기'

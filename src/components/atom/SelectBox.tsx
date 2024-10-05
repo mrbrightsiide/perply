@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import { IPlayList } from '@/types';
 
-export const SelectBox = <T extends { text: string }>({
-  selected,
+export const SelectBox = ({
+  selectedId,
   setSelected,
   list,
 }: {
-  selected: T;
-  setSelected: (item: T) => void;
-  list: T[];
+  selectedId: IPlayList['id'];
+  setSelected: (item: IPlayList) => void;
+  list: IPlayList[];
 }) => {
   const [folded, setFolded] = useState(true);
   return (
@@ -21,20 +22,23 @@ export const SelectBox = <T extends { text: string }>({
           border-radius: 8px;
         `}
       >
-        <span>{selected.text}</span>
+        <span>
+          {list.find((item) => item.id === selectedId)?.playlist_title_other ||
+            '카테고리 선택'}
+        </span>
         <span className='ico'>{folded ? '▼' : '▲'}</span>
       </Wrapper>
       {!folded && (
         <ListWrapper>
           {list.map((item) => (
             <Wrapper
-              key={item.text}
+              key={item.id}
               onClick={() => {
                 setSelected(item);
                 setFolded(true);
               }}
             >
-              {item.text}
+              {item.id}
             </Wrapper>
           ))}
         </ListWrapper>

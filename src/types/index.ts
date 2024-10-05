@@ -1,14 +1,3 @@
-export interface IPlaylistData {
-  user_name: string;
-  playlist_id: number;
-  content?: string;
-  youtube_url: string;
-  albumart_url: string;
-  title: string;
-  singer: string;
-  maniadb_id: string;
-}
-
 export type TTapeColor =
   | 'purple'
   | 'blue'
@@ -19,17 +8,20 @@ export type TTapeColor =
   | 'red'
   | 'cyan';
 
-export interface ITape {
+export interface ITape extends ITapeCreate {
   id: number;
+  like: number;
+  is_read: boolean;
+  created_at: string;
+}
+
+export interface ITapeCreate {
   playlist_id: number;
   user_name: string;
   singer: string;
   title: string;
   youtube_url: string;
   content: string;
-  like: number;
-  is_read: boolean;
-  created_at: string;
   color: TTapeColor;
   albumart_url: string;
 }
