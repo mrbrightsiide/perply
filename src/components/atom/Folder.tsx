@@ -81,7 +81,7 @@ export const Folder = ({
         }}
       >
         <FolderCount count={count} />
-        {data ? (
+        {data && data.length ? (
           <>
             <SortingBox onSort={() => {}} activeSort='new' />
             <TapeListDetail data={data} />
@@ -91,12 +91,12 @@ export const Folder = ({
             <Empty>
               친구를 떠올리면 생각나는{'\n'}
               노래를 뮤직 카드에 담아 보내주세요
-              <BasicButton
-                text='첫 번째로 노래 추천하기'
-                buttonStyle={{ width: '190px' }}
-                onClick={() => router.push('/search')}
-              />
             </Empty>
+            <BasicButton
+              text='첫 번째로 노래 추천하기'
+              buttonStyle={{ width: '190px' }}
+              onClick={() => router.push('/search')}
+            />
           </Content>
         )}
         <FolderSvg
@@ -121,10 +121,15 @@ const FolderIndex = styled.div`
 const Content = styled.div`
   white-space: pre-line;
   position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  row-gap: 16px;
   width: 100%;
   height: 100%;
+  z-index: 999;
 `;
 
 const Empty = styled.div`

@@ -1,21 +1,35 @@
-// import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { BackBtnHeader } from '@/components/atom/BackBtnHeader';
 import { css } from '@emotion/react';
 import { Folder } from '@/components/atom/Folder';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
-import { tapeDummyData } from '@/types';
+import { useEffect, useState } from 'react';
+import { getPlaylistDetails, IPlaylistDetailResponse } from '@/apis';
+import { useRouter } from 'next/router';
 
 const Index = () => {
-  // const router = useRouter();
-  // const { id } = router.query;
+  const router = useRouter();
+  const { id } = router.query;
+  const [playlistDetail, setPlaylistDetail] =
+    useState<IPlaylistDetailResponse | null>(null);
+
+  const getPlaylistDetail = async () => {
+    if (id) {
+      const res = await getPlaylistDetails('b61fb2', Number(id));
+      setPlaylistDetail(res);
+    }
+  };
+
+  useEffect(() => {
+    getPlaylistDetail();
+  }, []);
 
   return (
     <>
       <BackBtnHeader background='#141414' />
       <ColoredBackground color='#141414' />
       <Wrapper>
-        <Title>친구들이 나를 생각하면{'\n'}떠오르는 노래</Title>
+        <Title>{playlistDetail?.playlist.playlist_title}</Title>
         <Desc>
           친구들이 나를 떠올리며 보내준 노래를
           {'\n'}모아 만든 플레이리스트에요
@@ -31,7 +45,10 @@ const Index = () => {
             z-index: -1;
           `}
         />
-        <Folder count={0} data={tapeDummyData} />
+        <Folder
+          count={playlistDetail?.recommended_songs?.length || 0}
+          data={playlistDetail?.recommended_songs}
+        />
       </Wrapper>
     </>
   );

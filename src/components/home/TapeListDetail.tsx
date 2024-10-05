@@ -13,7 +13,7 @@ export const TapeListDetail = ({ data }: { data: ITape[] }) => {
           onClick={() =>
             router.push({
               pathname: '/playlist/song',
-              query: { id: item.id },
+              query: { id: item.id, playlistId: item.playlist_id },
             })
           }
         >
@@ -21,7 +21,7 @@ export const TapeListDetail = ({ data }: { data: ITape[] }) => {
             <AlbumComverBox>
               {!item.is_read && <UnreadDot top='0' right='0' />}
               <AlbumComver>
-                <img src={item.album_cover_url} alt='album cover' />
+                <img src={item.albumart_url} alt='album cover' />
               </AlbumComver>
             </AlbumComverBox>
             <InfoWrap>
@@ -61,6 +61,9 @@ const SongTitle = styled.p`
   font-size: 16px;
   font-weight: ${({ theme }) => theme.fontWeight.semiBold};
   color: #fff;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const From = styled.p`

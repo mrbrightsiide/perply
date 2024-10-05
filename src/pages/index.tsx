@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import {
+  signIn,
   // signIn,
   signOut,
   // useSession,
@@ -50,15 +51,7 @@ export default function Home() {
       />
       <BasicButton text='로그아웃' onClick={() => signOut()} />
       <BasicButton
-        onClick={() => {
-          axios
-            .get('http://www.perply.site/account/kakao/login', {
-              withCredentials: true,
-            })
-            .then((res) => {
-              console.log(res);
-            });
-        }}
+        onClick={() => signIn('kakao')}
         text='카카오 로그인'
         icon={
           <img

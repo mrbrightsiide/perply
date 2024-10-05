@@ -10,41 +10,31 @@ import FromIco from '@/../public/images/from.svg';
 import { BackBtnHeader } from '@/components/atom/BackBtnHeader';
 import Image from 'next/image';
 import { css } from '@emotion/react';
+import { getMusicCardDetail } from '@/apis';
+import { colorChips } from '@/components/card/ColorChip';
 
 const index = () => {
   const router = useRouter();
-  const { shared, id } = router.query;
+  const { shared, id, playlistId } = router.query;
   const [song, setSong] = useState<ITape | null>(null);
-  const [color, setColor] = useState<string | null>(null);
   const [youtubeOpen, setYoutubeOpen] = useState(false);
 
-  const func = async () => {
-    return new Promise((resolve) => {
-      return setTimeout(() => {
-        return resolve('blue');
-      }, 400);
-    });
-  };
-
-  const getSongColor = async () => {
-    const color = await func();
-    setColor(color as string);
-  };
-
-  useEffect(() => {
-    // getSong();
-    getSongColor();
-  }, []);
-
-  const getSong = async () => {
+  const getSongs = async () => {
     try {
-      const res = await fetch(`/api/songs/${id}`);
-      const data = await res.json();
-      setSong(data);
+      const res = await getMusicCardDetail(
+        'b61fb2',
+        Number(playlistId),
+        Number(id)
+      );
+      setSong(res);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    getSongs();
+  }, []);
 
   const songBox = (
     <InnerShadow
@@ -93,8 +83,8 @@ const index = () => {
             />
             <AlbumComver></AlbumComver>
             <div>
-              <SongTitle>{tapeDummyData[0].title}</SongTitle>
-              <Artist>{tapeDummyData[0].singer}</Artist>
+              <SongTitle>{song?.title}</SongTitle>
+              <Artist>{song?.singer}</Artist>
             </div>
           </div>
           <Image
@@ -111,17 +101,27 @@ const index = () => {
 
   return (
     <>
-      {!shared && <BackBtnHeader background='#DFCEFF' />}
+      {!shared && (
+        <BackBtnHeader
+          background={
+            colorChips.find((color) => color.name === song?.color)
+              ?.songBgColor ||
+            colorChips.find((color) => color.name === song?.color)?.color
+          }
+        />
+      )}
       <ColoredBackground
-        // color={colorChips.find((color) => color.name === song?.color)?.color}
-        color='#DFCEFF'
+        color={
+          colorChips.find((color) => color.name === song?.color)?.songBgColor ||
+          colorChips.find((color) => color.name === song?.color)?.color
+        }
       />
       <Wrapper>
         <Title>
-          <span>발라드러버사슴</span>
+          <span>{song?.user_name}</span>
           님이 선택한
         </Title>
-        <SubTitle>케이팝듣는여우님의 분위기와 어울리는 노래</SubTitle>
+        <SubTitle>{}님의 분위기와 어울리는 노래</SubTitle>
         <ContentBox>
           <InnerShadow>
             <InnerShadow2>
@@ -131,9 +131,9 @@ const index = () => {
                   padding: 28px 30px;
                 `}
               >
-                {color && (
+                {song?.color && (
                   <Image
-                    src={`/images/song/${color}.png`}
+                    src={`/images/song/${song?.color}.png`}
                     alt='My Image'
                     width={304}
                     height={141}
@@ -164,27 +164,28 @@ const index = () => {
                   <div>
                     <span onClick={() => setYoutubeOpen(false)}>접기</span>
                     <Line />
+                    <iframe
+                      src={song?.youtube_url}
+                      width='100%'
+                      height={250}
+                      frameBorder={0}
+                    />
                   </div>
                 )}
-                <Msg>
-                  <From>
-                    <FromIco />
-                    <span>짱구리</span>
-                  </From>
-                  <p>
-                    샬라샬라 이러한 이유에서 이 노래가 너랑 어울리는 거 같아
-                    이러한 이유에서 이 노래가 너랑 어울리는 거 같아 다음에
-                    콘서트 같이 가자 샬라샬라 이러한 이유에서 이 노래가 너랑
-                    어울리는 거 같아 이러한 이유에서 이 노래가 너랑 어울리는 거
-                    같아 다음에 콘서트 같이 가자
-                  </p>
-                </Msg>
+                {song?.content && (
+                  <Msg>
+                    <From>
+                      <FromIco />
+                      <span>{song.user_name}</span>
+                    </From>
+                    <p>{song.content}</p>
+                  </Msg>
+                )}
               </InnerShadow3>
             </InnerShadow2>
           </InnerShadow>
         </ContentBox>
       </Wrapper>
-      {/* {shared ? ( */}
       {true ? (
         <>
           <FloatButton

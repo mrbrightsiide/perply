@@ -11,7 +11,7 @@ export interface MusicCardData {
   //   is_read: boolean; // 읽음 여부 (예: false)
   //   created_at: string; // 생성 시간 (ISO 문자열, 예: "2024-10-03T01:57:35.070176Z")
   color: string; // 카드 색상 (예: "red", "white" 등)
-  alubmart_url?: string;
+  alubmart_url: string | null;
   playlist_id: number;
 }
 
@@ -42,6 +42,21 @@ export const getSongCardList = async (
     return response as any;
   } catch (error) {
     console.error('Error creating music card:', error);
+    throw error;
+  }
+};
+
+export const getMusicCardDetail = async (
+  user_uuid: string,
+  playlistId: number,
+  musicCardId: number
+): Promise<ITape> => {
+  try {
+    return await axiosInstance.get(
+      `cassette/recommended-playlist/detail/${user_uuid}/${playlistId}/${musicCardId}/`
+    );
+  } catch (error) {
+    console.error('Error fetching music card:', error);
     throw error;
   }
 };
