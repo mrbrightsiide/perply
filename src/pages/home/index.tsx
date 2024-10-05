@@ -4,7 +4,7 @@ import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { TapeListPreview } from '@/components/home/TapeListPreview';
 import { IPlayList, ITape } from '@/types';
 import styled from '@emotion/styled';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -13,7 +13,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 const Index = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { userId } = router.query as { userId: string };
+  const userId = session?.user?.uuid;
   const [playListPreview, setPlayListPreview] = useState<IPlayList[] | null>(
     null
   );
@@ -34,6 +34,7 @@ const Index = () => {
       );
       songList && setSongCardList(songList);
     })();
+    console.log('userId: ', userId);
   }, [userId]);
 
   const copyText = () => {
@@ -70,6 +71,7 @@ const Index = () => {
         <ColoredBackground color='#141414' />
         <Title>
           {session?.user.nickname}님의{'\n'}플리 보관함
+          <button onClick={() => signOut()}>로그아웃</button>
         </Title>
         <Swiper
           slidesPerView={1.14}
