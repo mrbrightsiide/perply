@@ -1,6 +1,19 @@
 import styled from '@emotion/styled';
 import { CheckBox } from '../atom/CheckBox';
 
+interface IMusic {
+  title: string;
+  'maniadb:artist': {
+    name: string;
+  }[];
+  'maniadb:album': {
+    image: string[];
+  }[];
+  $: {
+    id: string;
+  };
+}
+
 export const SearchMusicCard = ({
   item,
   checked,
@@ -8,21 +21,16 @@ export const SearchMusicCard = ({
   openIframe,
   onClickOpenIframe,
 }: {
-  item: {
-    title: string;
-    'maniadb:artist': { name: string }[];
-    'maniadb:album': { image: string[] }[];
-    $: { id: string };
-  };
+  item: IMusic;
   checked: boolean;
-  onChangeCheckBox: () => void;
+  onChangeCheckBox: (item: IMusic) => void;
   openIframe: boolean;
-  onClickOpenIframe: () => void;
+  onClickOpenIframe: (id: string) => void;
 }) => {
   return (
     <>
       <Wrapper>
-        <CoverAndInfo onClick={onClickOpenIframe}>
+        <CoverAndInfo onClick={() => onClickOpenIframe(item?.['$']?.['id'])}>
           <AlbumCover>
             <img
               src={item?.['maniadb:album']?.[0]?.image?.[0]}
@@ -36,7 +44,7 @@ export const SearchMusicCard = ({
             <Artist>{item['maniadb:artist'][0].name}</Artist>
           </Info>
         </CoverAndInfo>
-        <CheckBox checked={checked} onChange={onChangeCheckBox} />
+        <CheckBox checked={checked} onChange={() => onChangeCheckBox(item)} />
       </Wrapper>
       {openIframe && (
         <iframe

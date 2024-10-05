@@ -72,6 +72,10 @@ const SongTitle = styled.p`
   font-size: 16px;
   font-weight: ${({ theme }) => theme.fontWeight.semiBold};
   color: #000000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 170px;
 `;
 
 const From = styled.p`

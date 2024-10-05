@@ -62,8 +62,8 @@ const Button = styled.button<{
   ${({ disabled, theme }) =>
     disabled &&
     css`
-      background-color: #e9ebec;
-      cursor: not-allowed;
-      color: ${theme.font.gray_03};
+      background-color: #e9ebec !important;
+      cursor: not-allowed !important;
+      color: ${theme.font.gray_03} !important;
     `}
 `;

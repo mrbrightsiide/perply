@@ -1,34 +1,37 @@
+import { getAllPlaylists, getSongCardList } from '@/apis';
 import { BasicButton } from '@/components/atom/BasicButton';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { TapeListPreview } from '@/components/home/TapeListPreview';
-import { tapeDummyData } from '@/types';
+import { IPlayList, ITape, tapeDummyData } from '@/types';
 import styled from '@emotion/styled';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const Index = () => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const router = useRouter();
   const { userName } = router.query as { userName: string };
-  const isMyHome = userName === session?.user?.nickname;
-  const isEmpty = true;
+  // const isMyHome = userName === session?.user?.nickname;
+  const isMyHome = false;
+  const [playListPreview, setPlayListPreview] = useState<IPlayList[] | null>(
+    null
+  );
+  const [songCardList, setSongCardList] = useState<{
+    total_music_cards: number;
+    recommended_songs: ITape[];
+  } | null>(null);
 
   useEffect(() => {
-    if (session?.user) {
-      console.log('$$$ userId: ', session.user?.id);
-      console.log('$$$ userUuid: ', session.user?.uuid);
-      console.log('$$$ nickname: ', session.user?.nickname);
-      console.log('$$$ profileImage: ', session.user?.profileImage);
-      console.log('$$$ created: ', session.user?.created);
-    }
-  }, [session]);
-
-  useEffect(() => {
-    console.log('$$$ userName: ', userName);
-  }, [userName]);
+    (async () => {
+      const playList = await getAllPlaylists('b61fb2');
+      setPlayListPreview(playList);
+      const songList = await getSongCardList('b61fb2');
+      songList && setSongCardList(songList);
+    })();
+  }, []);
 
   return (
     <>
@@ -53,66 +56,51 @@ const Index = () => {
           slidesOffsetAfter={20}
           slidesOffsetBefore={20}
         >
-          {[
-            {
-              name: '친구들이 느끼는 나의\n분위기와 어울리는 노래',
-              count: 0,
-              id: 1,
-            },
-            {
-              name: '친구들이 느끼는 나의\n분위기와 어울리는 노래',
-              count: 0,
-              id: 2,
-            },
-            {
-              name: '친구들이 느끼는 나의\n분위기와 어울리는 노래',
-              count: 0,
-              id: 3,
-            },
-            {
-              name: '친구들이 느끼는 나의\n분위기와 어울리는 노래',
-              count: 0,
-              id: 4,
-            },
-          ].map((item, idx) => (
-            <SwiperSlide key={item.id}>
-              <Tape
-                onClick={() =>
-                  router.push({
-                    pathname: '/playlist/detail',
-                    query: { id: item.id },
-                  })
-                }
-              >
-                <TapeInfo>
-                  <p>{item.name}</p>
-                  <TransBtn>
-                    <span>{item?.count || 0}개의 곡</span>
-                  </TransBtn>
-                </TapeInfo>
-                <Image
-                  src={`/images/main/big_tape/no${idx + 1}.png`}
-                  alt='My Image'
-                  width={348}
-                  height={235}
-                  style={{
-                    position: 'absolute',
-                    top: '25px',
-                    left: '-10px',
-                    bottom: 0,
-                    zIndex: -1,
-                  }}
-                />
-              </Tape>
-            </SwiperSlide>
-          ))}
+          {playListPreview &&
+            playListPreview?.length &&
+            playListPreview.map((item, idx) => (
+              <SwiperSlide key={item.id}>
+                <Tape
+                  onClick={() =>
+                    router.push({
+                      pathname: '/playlist/detail',
+                      query: { id: item.id },
+                    })
+                  }
+                >
+                  <TapeInfo>
+                    <p>
+                      {isMyHome
+                        ? item.playlist_title
+                        : item.playlist_title_other || item.playlist_title}
+                    </p>
+                    <TransBtn>
+                      <span>{(item as any)?.total_songs || 0}개의 곡</span>
+                    </TransBtn>
+                  </TapeInfo>
+                  <Image
+                    src={`/images/main/big_tape/no${idx + 1}.png`}
+                    alt='My Image'
+                    width={348}
+                    height={235}
+                    style={{
+                      position: 'absolute',
+                      top: '25px',
+                      left: '-10px',
+                      bottom: 0,
+                      zIndex: -1,
+                    }}
+                  />
+                </Tape>
+              </SwiperSlide>
+            ))}
         </Swiper>
         <PaddingWrap>
           <CardListTitle>
             <span>
-              <span>0개의 음악 카드</span>
+              <span>{songCardList?.total_music_cards}개의 음악 카드</span>
             </span>
-            {!isEmpty && (
+            {songCardList && (
               <span
                 onClick={() => router.push('/playlist/all')}
                 className='more'
@@ -121,7 +109,7 @@ const Index = () => {
               </span>
             )}
           </CardListTitle>
-          {isEmpty ? (
+          {!songCardList?.recommended_songs?.length || !songCardList ? (
             <CardList>
               <Empty>
                 {isMyHome
@@ -140,7 +128,9 @@ const Index = () => {
             </CardList>
           ) : (
             <OverFlowBox>
-              <TapeListPreview data={tapeDummyData} />
+              {songCardList?.recommended_songs && (
+                <TapeListPreview data={songCardList.recommended_songs} />
+              )}
             </OverFlowBox>
           )}
         </PaddingWrap>

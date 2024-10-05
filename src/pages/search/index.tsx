@@ -31,7 +31,7 @@ export default function Search() {
   const [keyword, setKeyword] = useState('');
   const [result, setResult] = useState<any>();
   const [openIframe, setOpenIframe] = useState(false);
-  const [selectedMusic, setSelectedMusic] = useState<any>();
+  const [selectedMusic, setSelectedMusic] = useState<any>(null);
 
   const noResult = result?.rss?.channel?.[0]?.total?.[0] === '0';
 
@@ -64,13 +64,17 @@ export default function Search() {
               <SearchMusicCard
                 key={idx}
                 item={item}
-                checked={selectedMusic === idx + 1}
-                onChangeCheckBox={() =>
-                  setSelectedMusic(selectedMusic === idx + 1 ? null : idx + 1)
+                checked={selectedMusic === item}
+                onChangeCheckBox={(music) =>
+                  setSelectedMusic(selectedMusic === music ? null : music)
                 }
                 openIframe={openIframe === idx}
-                onClickOpenIframe={() =>
-                  setOpenIframe(openIframe === idx ? false : idx)
+                onClickOpenIframe={(id) =>
+                  setOpenIframe(
+                    openIframe === item?.['$']?.['id']
+                      ? false
+                      : item?.['$']?.['id']
+                  )
                 }
               />
             ))}
@@ -78,25 +82,25 @@ export default function Search() {
         </CenterBox>
         <Space />
       </PageWrapper>
-      <FloatButton
-        title='선택한 음악 추가하기'
-        disabled={!selectedMusic}
-        onClick={() =>
-          router.push({
-            pathname: '/search/create',
-            query: {
-              title:
-                result?.rss?.channel?.[0]?.item?.[selectedMusic - 1]
-                  ?.title?.[0],
-              singer:
-                result?.rss?.channel?.[0]?.item?.[selectedMusic - 1]
-                  ?.artist?.[0],
-              id: result?.rss?.channel?.[0]?.item?.[selectedMusic - 1]
-                ?.maniadb_id?.[0],
-            },
-          })
-        }
-      />
+      {!noResult && (
+        <FloatButton
+          title='선택한 음악 추가하기'
+          disabled={!selectedMusic}
+          onClick={() =>
+            router.push({
+              pathname: '/create_card',
+              query: {
+                title: selectedMusic.title,
+                singer: selectedMusic['maniadb:artist'][0].name,
+                id: selectedMusic['$']?.['id'],
+                albumart_url: selectedMusic?.[
+                  'maniadb:album'
+                ]?.[0]?.image?.[0]?.replace('http://', ''),
+              },
+            })
+          }
+        />
+      )}
     </>
   );
 }

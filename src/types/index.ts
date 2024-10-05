@@ -6,7 +6,7 @@ export interface IPlaylistData {
   };
   content?: string;
   youtube_url: string;
-  album_image: string;
+  albumart_url: string;
   title: string;
   singer: string;
   maniadb_id: string;
@@ -34,7 +34,7 @@ export interface ITape {
   is_read: boolean;
   created_at: string;
   color: TTapeColor;
-  album_cover_url: string;
+  albumart_url: string;
 }
 
 export interface ITapeResponse {
@@ -55,7 +55,7 @@ export const tapeDummyData: ITape[] = [
     is_read: false,
     created_at: '2024-10-03T01:57:35.070176Z',
     color: 'pink',
-    album_cover_url:
+    albumart_url:
       'https://visla.kr/wp/wp-content/uploads/2022/11/210260257_492056461875169_1648387615546901397_n.jpg',
   },
   {
@@ -70,7 +70,7 @@ export const tapeDummyData: ITape[] = [
     is_read: true,
     created_at: '2024-10-03T02:00:31.399606Z',
     color: 'skyblue',
-    album_cover_url:
+    albumart_url:
       'https://visla.kr/wp/wp-content/uploads/2022/11/210260257_492056461875169_1648387615546901397_n.jpg',
   },
   {
@@ -85,7 +85,7 @@ export const tapeDummyData: ITape[] = [
     is_read: false,
     created_at: '2024-10-03T02:05:17.542127Z',
     color: 'green',
-    album_cover_url:
+    albumart_url:
       'https://visla.kr/wp/wp-content/uploads/2022/11/210260257_492056461875169_1648387615546901397_n.jpg',
   },
   {
@@ -100,7 +100,7 @@ export const tapeDummyData: ITape[] = [
     is_read: true,
     created_at: '2024-10-03T02:10:13.597026Z',
     color: 'green',
-    album_cover_url:
+    albumart_url:
       'https://visla.kr/wp/wp-content/uploads/2022/11/210260257_492056461875169_1648387615546901397_n.jpg',
   },
   {
@@ -115,20 +115,21 @@ export const tapeDummyData: ITape[] = [
     is_read: true,
     created_at: '2024-10-03T03:22:20.963271Z',
     color: 'cyan',
-    album_cover_url:
+    albumart_url:
       'https://visla.kr/wp/wp-content/uploads/2022/11/210260257_492056461875169_1648387615546901397_n.jpg',
   },
 ];
 
-export interface IPlaylist {
+export interface IPlayList {
   id: number;
   user_id: number;
   user_uuid: string;
   playlist_title: string;
   created_at: string;
+  playlist_title_other: string | null;
 }
 
 export interface ITapeDetail {
-  playlist: IPlaylist;
+  playlist: IPlayList;
   recommended_songs: ITape[];
 }

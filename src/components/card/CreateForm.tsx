@@ -40,7 +40,7 @@ export const CreateForm = ({
           <MusicWrapper>
             <AlbumCover>
               <img
-                src={info.album_image}
+                src={'http://' + info.albumart_url}
                 width='100%'
                 height='100%'
                 alt='album cover'
@@ -105,6 +105,7 @@ const Artist = styled.p`
   font-size: 16px;
   font-weight: 400;
   color: ${({ theme }) => theme.font.gray_02};
+  margin-top: 4px;
 `;
 
 const Title = styled.p`
