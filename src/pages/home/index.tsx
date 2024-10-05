@@ -24,11 +24,14 @@ const Index = () => {
   const [isMyHome, setIsMyHome] = useState(false);
 
   useEffect(() => {
-    if (!userId) return;
     (async () => {
-      const playList = await getAllPlaylists(userId);
+      const playList = await getAllPlaylists(
+        (userId as any) || session?.user.uuid
+      );
       setPlayListPreview(playList);
-      const songList = await getSongCardList(userId);
+      const songList = await getSongCardList(
+        (userId as any) || session?.user.uuid
+      );
       songList && setSongCardList(songList);
     })();
   }, [userId]);
