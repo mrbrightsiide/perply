@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import FolderSvg from '@/assets/folder.svg';
+import FolderSvg from '@/../public/images/folder.svg';
 import { BasicButton } from './BasicButton';
 import { useRouter } from 'next/router';
 import { TapeListDetail } from '../home/TapeListDetail';

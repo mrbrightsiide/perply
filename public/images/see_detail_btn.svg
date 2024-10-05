@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="93" height="32" viewBox="0 0 93 32">
+  <g id="그룹_194679" data-name="그룹 194679" transform="translate(-30 -646)">
+    <g id="사각형_160847" data-name="사각형 160847" transform="translate(30 646)" fill="none" stroke="#fff" stroke-width="1">
+      <rect width="93" height="32" rx="16" stroke="none"/>
+      <rect x="0.5" y="0.5" width="92" height="31" rx="15.5" fill="none"/>
+    </g>
+    <text id="자세히_보기" data-name="자세히 보기" transform="translate(42 667)" fill="#fff" font-size="15" font-family="Pretendard-Regular, Pretendard"><tspan x="0" y="0">자세히 보기</tspan></text>
+  </g>
+</svg>

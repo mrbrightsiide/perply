@@ -1,3 +1,4 @@
+import { theme } from '@/styles/theme.d';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -6,11 +7,19 @@ export const FloatButton = ({
   disabled,
   bottomOffset = 30,
   onClick,
+  style,
 }: {
   title: string;
   disabled?: boolean;
   bottomOffset?: number;
   onClick: () => void;
+  style?: {
+    bg?: string;
+    color?: string;
+    maxWidth?: string;
+    left?: string;
+    right?: string;
+  };
 }) => {
   return (
     <Button
@@ -20,6 +29,13 @@ export const FloatButton = ({
         e.preventDefault();
         onClick();
       }}
+      css={css`
+        background-color: ${style?.bg || theme.primary[600]};
+        color: ${style?.color || '#222222'};
+        max-width: ${style?.maxWidth || '335px'};
+        left: ${style?.left || 'auto'};
+        right: ${style?.right || 'auto'};
+      `}
     >
       {title}
     </Button>
@@ -37,12 +53,11 @@ const Button = styled.button<{
   justify-self: center;
   height: 52px;
   border-radius: 100px;
-  background-color: ${({ theme }) => theme.primary[600]};
-  color: #222222;
   font-size: 16px;
   font-weight: ${({ theme: { fontWeight } }) => fontWeight.medium};
   border: none;
   cursor: pointer;
+  z-index: 99;
 
   ${({ disabled, theme }) =>
     disabled &&

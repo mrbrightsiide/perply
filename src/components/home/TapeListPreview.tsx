@@ -3,7 +3,7 @@ import { ITape } from '@/types';
 import { colorChips } from '../card/ColorChip';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
-import TapeSvg from '@/assets/tape_yellow.svg';
+import TapeSvg from '@/../public/images/tape_yellow.svg';
 
 export const TapeListPreview = ({ data }: { data: ITape[] }) => {
   const router = useRouter();
