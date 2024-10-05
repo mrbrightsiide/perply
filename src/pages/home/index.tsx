@@ -36,6 +36,20 @@ const Index = () => {
     })();
   }, [userId]);
 
+  const copyText = () => {
+    const textToCopy =
+      'https://perply.vercel.app/home?userId=' + session?.user.uuid;
+
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() =>
+        alert('클립보드에 링크가 복사되었습니다\n친구에게 공유해보세요!')
+      )
+      .catch((err) => {
+        console.error('Failed to copy text: ', err);
+      });
+  };
+
   useEffect(() => {
     setIsMyHome(session?.user.uuid === userId);
   }, [session]);
@@ -136,10 +150,12 @@ const Index = () => {
                 }
                 buttonStyle={{ width: '190px' }}
                 onClick={() =>
-                  router.push({
-                    pathname: '/search',
-                    query: { userId },
-                  })
+                  isMyHome
+                    ? copyText()
+                    : router.push({
+                        pathname: '/search',
+                        query: { userId },
+                      })
                 }
               />
             </CardList>
