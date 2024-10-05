@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { BackBtnHeader } from '@/components/atom/BackBtnHeader';
 import { css } from '@emotion/react';
 import { Folder } from '@/components/atom/Folder';
-import { colorChips } from '@/components/card/ColorChip';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { tapeDummyData } from '@/types';
 
@@ -29,9 +28,6 @@ const Index = () => {
             /* margin: 36px 0 71px 0; */
             right: 0;
             position: absolute;
-            background-color: ${colorChips.find(
-              (color) => color.name === 'lime'
-            )?.color};
             z-index: -1;
           `}
         />
