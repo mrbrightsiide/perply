@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 import { TapeListDetail } from '../home/TapeListDetail';
 import { ITape } from '@/types';
 import { css } from '@emotion/react';
-// import { usePlayListStore } from '@/stores';
-// import { useEffect } from 'react';
 
 export const SortingBox = ({
   onSort,
@@ -57,6 +55,7 @@ export const Folder = ({
   data?: ITape[];
 }) => {
   const router = useRouter();
+  const { userId } = router.query as { userId: string };
   // const { sortType, setSort } = usePlayListStore((state) => ({
   //   sortType: state.sortType,
   //   setSort: state.setSort,
@@ -95,7 +94,12 @@ export const Folder = ({
             <BasicButton
               text='첫 번째로 노래 추천하기'
               buttonStyle={{ width: '190px' }}
-              onClick={() => router.push('/search')}
+              onClick={() =>
+                router.push({
+                  pathname: '/search',
+                  query: { userId },
+                })
+              }
             />
           </Content>
         )}

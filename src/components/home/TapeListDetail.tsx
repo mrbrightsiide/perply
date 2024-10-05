@@ -5,6 +5,8 @@ import { UnreadDot } from './TapeListPreview';
 
 export const TapeListDetail = ({ data }: { data: ITape[] }) => {
   const router = useRouter();
+  const { userId } = router.query as { userId: string };
+
   return (
     <Wrapper>
       {data.map((item) => (
@@ -13,7 +15,7 @@ export const TapeListDetail = ({ data }: { data: ITape[] }) => {
           onClick={() =>
             router.push({
               pathname: '/playlist/song',
-              query: { id: item.id, playlistId: item.playlist_id },
+              query: { id: item.id, playlistId: item.playlist_id, userId },
             })
           }
         >

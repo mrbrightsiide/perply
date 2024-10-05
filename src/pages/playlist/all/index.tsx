@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 
 const index = () => {
   const router = useRouter();
+  const { userId } = router.query as { userId: string };
 
   return (
     <>
@@ -37,7 +38,7 @@ const index = () => {
               onClick={() =>
                 router.push({
                   pathname: '/playlist/song',
-                  query: { id: item.id },
+                  query: { id: item.id, userId },
                 })
               }
             >

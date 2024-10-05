@@ -12,36 +12,6 @@ export const authOptions = {
       clientSecret: process.env.KAKAO_CLIENT_SECRET as string,
     }),
   ],
-  // callbacks: {
-  //   async signIn({
-  //     user,
-  //     account,
-  //     _profile,
-  //     _email,
-  //     _credentials,
-  //   }: {
-  //     user: any;
-  //     account: any;
-  //     _profile: any;
-  //     _email: any;
-  //     _credentials: any;
-  //   }) {
-  //     try {
-  //       const { meta } = await snsLogin({ account, user });
-  //       return meta.code === 0 || `signin?errorcode=${meta.code}`;
-  //     } catch (error: any) {
-  //       if (error) {
-  //         return `signin?errorcode=${error.message}`;
-  //       }
-  //     }
-  //   },
-  //   async session({ session, token }: { session: any; token: any }) {
-  //     console.log('$$$ token: ', token);
-  //     session.user = token as any;
-  //     console.log('$$$ session: ', session);
-  //     return session;
-  //   },
-  // },
   callbacks: {
     async jwt({
       token,
@@ -90,10 +60,6 @@ export const authOptions = {
       session.user.profileImage = token.profileImage;
       session.user.created = token.created;
       return session;
-    },
-
-    async redirect({ baseUrl }: { baseUrl: string }) {
-      return `${baseUrl}/home`;
     },
   },
 };

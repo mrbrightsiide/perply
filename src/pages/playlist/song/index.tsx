@@ -12,17 +12,22 @@ import Image from 'next/image';
 import { css } from '@emotion/react';
 import { getMusicCardDetail } from '@/apis';
 import { colorChips } from '@/components/card/ColorChip';
+import { useSession } from 'next-auth/react';
 
 const index = () => {
   const router = useRouter();
-  const { shared, id, playlistId } = router.query;
+  const { shared, id, playlistId, userId } = router.query;
+  const { data: session } = useSession();
+
   const [song, setSong] = useState<ITape | null>(null);
   const [youtubeOpen, setYoutubeOpen] = useState(false);
+
+  const isMine = session?.user.uuid === userId;
 
   const getSongs = async () => {
     try {
       const res = await getMusicCardDetail(
-        'b61fb2',
+        userId as string,
         Number(playlistId),
         Number(id)
       );
@@ -186,7 +191,7 @@ const index = () => {
           </InnerShadow>
         </ContentBox>
       </Wrapper>
-      {true ? (
+      {isMine ? (
         <>
           <FloatButton
             title='내 플리 만들기'

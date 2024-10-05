@@ -1,9 +1,6 @@
 export interface IPlaylistData {
   user_name: string;
-  playlist_id: {
-    text: string;
-    key: number;
-  };
+  playlist_id: number;
   content?: string;
   youtube_url: string;
   albumart_url: string;

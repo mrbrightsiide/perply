@@ -2,20 +2,18 @@ import { getAllPlaylists, getSongCardList } from '@/apis';
 import { BasicButton } from '@/components/atom/BasicButton';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { TapeListPreview } from '@/components/home/TapeListPreview';
-import { IPlayList, ITape, tapeDummyData } from '@/types';
+import { IPlayList, ITape } from '@/types';
 import styled from '@emotion/styled';
-// import { useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const Index = () => {
-  // const { data: session } = useSession();
   const router = useRouter();
-  const { userName } = router.query as { userName: string };
-  // const isMyHome = userName === session?.user?.nickname;
-  const isMyHome = false;
+  const { data: session } = useSession();
+  const { userId } = router.query as { userId: string };
   const [playListPreview, setPlayListPreview] = useState<IPlayList[] | null>(
     null
   );
@@ -23,15 +21,20 @@ const Index = () => {
     total_music_cards: number;
     recommended_songs: ITape[];
   } | null>(null);
+  const [isMyHome, setIsMyHome] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const playList = await getAllPlaylists('b61fb2');
+      const playList = await getAllPlaylists(userId);
       setPlayListPreview(playList);
-      const songList = await getSongCardList('b61fb2');
+      const songList = await getSongCardList(userId);
       songList && setSongCardList(songList);
     })();
   }, []);
+
+  useEffect(() => {
+    setIsMyHome(session?.user.uuid === userId);
+  }, [session]);
 
   return (
     <>
@@ -48,7 +51,7 @@ const Index = () => {
       <Wrapper>
         <ColoredBackground color='#141414' />
         <Title>
-          {userName}님의{'\n'}플리 보관함
+          {session?.user.nickname}님의{'\n'}플리 보관함
         </Title>
         <Swiper
           slidesPerView={1.14}
@@ -64,7 +67,7 @@ const Index = () => {
                   onClick={() =>
                     router.push({
                       pathname: '/playlist/detail',
-                      query: { id: item.id },
+                      query: { id: item.id, userId },
                     })
                   }
                 >
@@ -102,7 +105,12 @@ const Index = () => {
             </span>
             {songCardList && (
               <span
-                onClick={() => router.push('/playlist/all')}
+                onClick={() =>
+                  router.push({
+                    pathname: '/playlist/song',
+                    query: { userId },
+                  })
+                }
                 className='more'
               >
                 더보기 {'>'}
@@ -123,7 +131,12 @@ const Index = () => {
                     : '첫 번째로 노래 추천하기'
                 }
                 buttonStyle={{ width: '190px' }}
-                onClick={() => router.push('/search')}
+                onClick={() =>
+                  router.push({
+                    pathname: '/search',
+                    query: { userId },
+                  })
+                }
               />
             </CardList>
           ) : (

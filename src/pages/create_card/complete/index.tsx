@@ -3,9 +3,13 @@ import { BasicButton } from '@/components/atom/BasicButton';
 import { useRouter } from 'next/router';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { css } from '@emotion/react';
+import { signIn, useSession } from 'next-auth/react';
 
 const Index = () => {
   const router = useRouter();
+  const { data: session } = useSession();
+  const { userId } = router.query as { userId: string };
+
   return (
     <Wrapper>
       <ColoredBackground />
@@ -23,12 +27,26 @@ const Index = () => {
       <BtnWrap>
         <BasicButton
           text='닫기'
-          onClick={() => router.push('/home')}
+          onClick={() =>
+            router.push({
+              pathname: '/home',
+              query: {
+                userId,
+              },
+            })
+          }
           buttonStyle={{
             background: 'rgb(191, 191, 191, 0.3)',
           }}
         />
-        <BasicButton text='나도 만들기' onClick={() => router.push('/')} />
+        <BasicButton
+          text='나도 만들기'
+          onClick={() =>
+            signIn('kakao', {
+              callbackUrl: `/home/?userId=${session?.user.uuid}`,
+            })
+          }
+        />
       </BtnWrap>
     </Wrapper>
   );

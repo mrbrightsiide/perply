@@ -9,13 +9,13 @@ import { useRouter } from 'next/router';
 
 const Index = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, userId } = router.query;
   const [playlistDetail, setPlaylistDetail] =
     useState<IPlaylistDetailResponse | null>(null);
 
   const getPlaylistDetail = async () => {
-    if (id) {
-      const res = await getPlaylistDetails('b61fb2', Number(id));
+    if (id && userId) {
+      const res = await getPlaylistDetails(userId as string, Number(id));
       setPlaylistDetail(res);
     }
   };
@@ -39,7 +39,6 @@ const Index = () => {
           css={css`
             width: 281px;
             height: 183px;
-            /* margin: 36px 0 71px 0; */
             right: 0;
             position: absolute;
             z-index: -1;

@@ -7,6 +7,8 @@ import Image from 'next/image';
 
 export const TapeListPreview = ({ data }: { data: ITape[] }) => {
   const router = useRouter();
+  const { userId } = router.query as { userId: string };
+
   return (
     <Wrapper>
       {data.map((item) => (
@@ -20,7 +22,7 @@ export const TapeListPreview = ({ data }: { data: ITape[] }) => {
           onClick={() =>
             router.push({
               pathname: '/playlist/song',
-              query: { id: item.id, playlistId: item.playlist_id },
+              query: { id: item.id, playlistId: item.playlist_id, userId },
             })
           }
         >

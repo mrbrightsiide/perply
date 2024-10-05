@@ -13,6 +13,8 @@ import { ColoredBackground } from '@/components/atom/ColoredBackground';
 
 export default function Search() {
   const router = useRouter();
+  const { userId } = router.query;
+
   const fetchMusicSearch = async (params: {
     keyword: string;
     sr?: 'album' | 'song' | 'artist';
@@ -96,6 +98,7 @@ export default function Search() {
                 albumart_url: selectedMusic?.[
                   'maniadb:album'
                 ]?.[0]?.image?.[0]?.replace('http://', ''),
+                userId,
               },
             })
           }

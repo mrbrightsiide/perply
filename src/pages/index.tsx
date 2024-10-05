@@ -3,25 +3,10 @@ import { BasicButton } from '@/components/atom/BasicButton';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import axios from 'axios';
-import {
-  signIn,
-  // signIn,
-  signOut,
-  // useSession,
-} from 'next-auth/react';
-// import { useRouter } from 'next/navigation';
-// import { useEffect } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 export default function Home() {
-  // const router = useRouter();
-  // const { data: session } = useSession();
-
-  // useEffect(() => {
-  //   if (session?.user?.name) {
-  //     router.push('/home');
-  //   }
-  // }, [session]);
+  const { data: session } = useSession();
 
   return (
     <Wrapper>
@@ -51,7 +36,11 @@ export default function Home() {
       />
       <BasicButton text='로그아웃' onClick={() => signOut()} />
       <BasicButton
-        onClick={() => signIn('kakao')}
+        onClick={() =>
+          signIn('kakao', {
+            callbackUrl: `/home/?userId=${session?.user.uuid}`,
+          })
+        }
         text='카카오 로그인'
         icon={
           <img

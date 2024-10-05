@@ -11,10 +11,12 @@ const Index = () => {
     title: prevTitle,
     singer: prevSinger,
     id: prevId,
+    userId,
   } = router.query as {
     title: string | undefined;
     singer: string | undefined;
     id: string | undefined;
+    userId: string;
   };
   const [title, setTitle] = useState(prevTitle || '');
   const [singer, setSinger] = useState(prevSinger || '');
@@ -25,7 +27,7 @@ const Index = () => {
     }
     router.push({
       pathname: '/create_card',
-      query: { title, singer, id: prevId },
+      query: { title, singer, id: prevId, userId },
     });
   };
 
