@@ -4,8 +4,50 @@ import { BasicButton } from './BasicButton';
 import { useRouter } from 'next/router';
 import { TapeListDetail } from '../home/TapeListDetail';
 import { ITape } from '@/types';
+import { css } from '@emotion/react';
 // import { usePlayListStore } from '@/stores';
 // import { useEffect } from 'react';
+
+export const SortingBox = ({
+  onSort,
+  activeSort,
+  position,
+}: {
+  onSort: (sortType: 'old' | 'new') => void;
+  activeSort: 'old' | 'new';
+  position?: { top?: string; right?: string };
+}) => {
+  return (
+    <SortBox
+      css={css`
+        top: ${position?.top || '56px'};
+        right: ${position?.right || '20px'};
+      `}
+    >
+      <span onClick={() => onSort('old')}>오래된순</span>
+      <span onClick={() => onSort('new')}>최신순</span>
+    </SortBox>
+  );
+};
+
+export const FolderCount = ({
+  count,
+  position,
+}: {
+  count: number;
+  position?: { top?: string; left?: string };
+}) => {
+  return (
+    <FolderIndex
+      css={css`
+        top: ${position?.top || '20px'};
+        left: ${position?.left || '20px'};
+      `}
+    >
+      {count}개의 곡
+    </FolderIndex>
+  );
+};
 
 export const Folder = ({
   count = 0,
@@ -38,13 +80,10 @@ export const Folder = ({
           overflow: 'hidden',
         }}
       >
-        <FolderIndex>{count}개의 곡</FolderIndex>
+        <FolderCount count={count} />
         {data ? (
           <>
-            <SortBox>
-              {/* <span onClick={() => setSort('old')}>오래된순</span>
-              <span onClick={() => setSort('new')}>최신순</span> */}
-            </SortBox>
+            <SortingBox onSort={() => {}} activeSort='new' />
             <TapeListDetail data={data} />
           </>
         ) : (
@@ -74,8 +113,6 @@ export const Folder = ({
 
 const FolderIndex = styled.div`
   position: absolute;
-  top: 16px;
-  left: 20px;
   font-size: 16px;
   font-weight: ${({ theme }) => theme.fontWeight.medium};
   color: #fff;
@@ -100,9 +137,8 @@ const Empty = styled.div`
 const SortBox = styled.div`
   display: flex;
   color: #fff;
+  column-gap: 8px;
   position: absolute;
-  top: 56px;
-  right: 20px;
 
   > span {
     cursor: pointer;

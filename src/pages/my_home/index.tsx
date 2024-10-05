@@ -108,7 +108,14 @@ const Index = () => {
             <span>
               <span>0</span>개의 음악 카드
             </span>
-            {!isEmpty && <span className='more'>더보기 {'>'}</span>}
+            {!isEmpty && (
+              <span
+                onClick={() => router.push('/my_home/all')}
+                className='more'
+              >
+                더보기 {'>'}
+              </span>
+            )}
           </CardListTitle>
           {isEmpty ? (
             <CardList>

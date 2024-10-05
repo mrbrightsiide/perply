@@ -8,16 +8,23 @@ export const BackBtnHeader = ({
   subContent,
   onGoBack,
   background,
+  color = '#111',
 }: {
   title?: string;
   subContent?: React.ReactNode;
   onGoBack?: () => void;
   background?: string;
+  color?: string;
 }) => {
   const router = useRouter();
 
   return (
-    <Wrapper background={background}>
+    <Wrapper
+      background={background}
+      css={css`
+        color: ${color};
+      `}
+    >
       <BackAnchor
         css={css`
           border: 1px solid black;
@@ -39,7 +46,7 @@ export const BackBtnHeader = ({
 const BackAnchor = styled.a`
   display: block;
   position: absolute;
-  left: 30px;
+  left: 20px;
   background-color: red;
   color: white;
   width: 28px;
@@ -65,5 +72,4 @@ const Wrapper = styled.div<{
   top: 0;
   height: 56px;
   z-index: 100;
-  color: #111;
 `;
