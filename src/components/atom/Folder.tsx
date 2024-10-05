@@ -42,8 +42,8 @@ export const Folder = ({
         {data ? (
           <>
             <SortBox>
-              <span onClick={() => setSort('old')}>오래된순</span>
-              <span onClick={() => setSort('new')}>최신순</span>
+              {/* <span onClick={() => setSort('old')}>오래된순</span>
+              <span onClick={() => setSort('new')}>최신순</span> */}
             </SortBox>
             <TapeListDetail data={data} />
           </>
