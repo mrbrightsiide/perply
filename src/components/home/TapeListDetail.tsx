@@ -12,7 +12,7 @@ export const TapeListDetail = ({ data }: { data: ITape[] }) => {
           key={item.id}
           onClick={() =>
             router.push({
-              pathname: '/my_home/detail',
+              pathname: '/playlist/detail',
               query: { id: item.id },
             })
           }

@@ -81,7 +81,7 @@ const Index = () => {
                 }
                 onClick={() =>
                   router.push({
-                    pathname: '/my_home/detail',
+                    pathname: '/playlist/detail',
                     query: { id: item.id },
                   })
                 }
@@ -110,7 +110,7 @@ const Index = () => {
             </span>
             {!isEmpty && (
               <span
-                onClick={() => router.push('/my_home/all')}
+                onClick={() => router.push('/playlist/all')}
                 className='more'
               >
                 더보기 {'>'}

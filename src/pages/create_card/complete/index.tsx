@@ -23,7 +23,7 @@ const Index = () => {
       <BtnWrap>
         <BasicButton
           text='닫기'
-          onClick={() => router.push('/my_home')}
+          onClick={() => router.push('/home')}
           buttonStyle={{
             background: 'rgb(191, 191, 191, 0.3)',
           }}

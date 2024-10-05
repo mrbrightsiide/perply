@@ -18,7 +18,7 @@ export default function Home() {
 
   // useEffect(() => {
   //   if (session?.user?.name) {
-  //     router.push('/my_home');
+  //     router.push('/home');
   //   }
   // }, [session]);
 

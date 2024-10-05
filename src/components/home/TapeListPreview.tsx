@@ -19,7 +19,7 @@ export const TapeListPreview = ({ data }: { data: ITape[] }) => {
           `}
           onClick={() =>
             router.push({
-              pathname: '/my_home/detail',
+              pathname: '/playlist/song',
               query: { id: item.id },
             })
           }
