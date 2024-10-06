@@ -74,7 +74,7 @@ const Index = () => {
         <ColoredBackground color='#141414' />
         <Title>
           {session?.user.nickname}님의{'\n'}플리 보관함
-          <button onClick={() => signOut()}>로그아웃</button>
+          {/* <button onClick={() => signOut()}>로그아웃</button> */}
         </Title>
         <Swiper
           slidesPerView={1.14}
