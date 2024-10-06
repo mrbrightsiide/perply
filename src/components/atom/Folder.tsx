@@ -116,7 +116,7 @@ export const Folder = ({
               노래를 뮤직 카드에 담아 보내주세요
             </Empty>
             <BasicButton
-              text='첫 번째로 노래 추천하기'
+              text='첫 번째로 음악카드 보내기'
               buttonStyle={{ width: '190px' }}
               onClick={() =>
                 router.push({
