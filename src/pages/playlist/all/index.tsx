@@ -26,7 +26,12 @@ const index = () => {
 
   return (
     <>
-      <BackBtnHeader background='#141414' title='받은 음악 카드' color='#fff' />
+      <BackBtnHeader
+        background='#141414'
+        title='받은 음악 카드'
+        color='#fff'
+        whiteArrow
+      />
       <ColoredBackground color='#141414' />
       <Wrapper>
         <IndexBox>
