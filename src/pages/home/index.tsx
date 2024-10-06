@@ -183,7 +183,7 @@ const Index = () => {
                 text={
                   isMyHome
                     ? '친구에게 링크 공유하기'
-                    : '첫 번째로 노래 추천하기'
+                    : '첫 번째로 음악카드 보내기'
                 }
                 buttonStyle={{ width: '190px' }}
                 onClick={() =>
