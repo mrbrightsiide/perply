@@ -37,6 +37,20 @@ const index = () => {
     }
   };
 
+  const copyText = () => {
+    const textToCopy =
+      'https://perply.vercel.app/home?userId=' + session?.user.uuid;
+
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() =>
+        alert('클립보드에 링크가 복사되었습니다\n친구에게 공유해보세요!')
+      )
+      .catch((err) => {
+        console.error('Failed to copy text: ', err);
+      });
+  };
+
   useEffect(() => {
     getSongs();
   }, []);
@@ -179,8 +193,24 @@ const index = () => {
                   onClick={() => setYoutubeOpen(true)}
                 />
                 {youtubeOpen && (
-                  <div>
-                    <span onClick={() => setYoutubeOpen(false)}>닫기</span>
+                  <div
+                    css={css`
+                      text-align: center;
+                    `}
+                  >
+                    <span onClick={() => setYoutubeOpen(false)}>
+                      <img
+                        src='/images/back.png'
+                        alt=''
+                        css={css`
+                          transform: rotate(90deg);
+                          width: 15px;
+                          height: 15px;
+                          cursor: pointer;
+                          margin: 0 auto;
+                        `}
+                      />
+                    </span>
                     <Line />
                     {song?.youtube_url}
                     {/* <iframe
@@ -206,6 +236,16 @@ const index = () => {
         </ContentBox>
       </Wrapper>
       {isMine ? (
+        <FloatButton
+          title='음악 카드 링크 공유하기'
+          style={{
+            bg: '#fff',
+            color: '#222222',
+            maxWidth: '235px',
+          }}
+          onClick={() => copyText()}
+        />
+      ) : (
         <>
           <FloatButton
             title='내 플리 만들기'
@@ -228,16 +268,6 @@ const index = () => {
             onClick={() => {}}
           />
         </>
-      ) : (
-        <FloatButton
-          title='음악 카드 링크 공유하기'
-          style={{
-            bg: '#fff',
-            color: '#222222',
-            maxWidth: '235px',
-          }}
-          onClick={() => {}}
-        />
       )}
     </>
   );
@@ -261,7 +291,7 @@ const SubTitle = styled.h2`
 `;
 
 const Wrapper = styled.div`
-  padding: 56px 20px 0 20px;
+  padding: 56px 20px 100px 20px;
 `;
 
 const Msg = styled.div`
