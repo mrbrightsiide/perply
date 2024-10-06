@@ -103,7 +103,7 @@ export const recommendSongs = [
     color: 'cyan',
     albumart_url:
       'https://i1.sndcdn.com/artworks-0hcmWmh9PfZJRd2a-1U37gA-t500x500.jpg',
-    playlist_id: 3,
+    playlist_id: 4,
     user_name: '낭만적인 예진',
   },
   {
@@ -129,7 +129,7 @@ export const recommendSongs = [
     color: 'green',
     albumart_url:
       'https://image.bugsm.co.kr/album/images/500/40955/4095501.jpg',
-    playlist_id: 3,
+    playlist_id: 4,
     user_name: '유애나 짱',
   },
   {

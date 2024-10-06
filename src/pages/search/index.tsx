@@ -72,8 +72,8 @@ export default function Search() {
                 onChangeCheckBox={(music) =>
                   setSelectedMusic(selectedMusic === music ? null : music)
                 }
-                openIframe={openIframe === idx}
-                onClickOpenIframe={(id) =>
+                openIframe={openIframe === item?.['$']?.['id']}
+                onClickOpenIframe={() =>
                   setOpenIframe(
                     openIframe === item?.['$']?.['id']
                       ? false

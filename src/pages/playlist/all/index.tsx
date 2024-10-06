@@ -2,13 +2,27 @@ import styled from '@emotion/styled';
 import { BackBtnHeader } from '@/components/atom/BackBtnHeader';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { FolderCount, SortingBox } from '@/components/atom/Folder';
-import { tapeDummyData } from '@/types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { recommendSongs } from '@/apis';
 
 const index = () => {
   const router = useRouter();
   const { userId } = router.query as { userId: string };
+  const [sort, setSort] = useState<'old' | 'new'>('old');
+  const [data, setData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const arr = [...recommendSongs].sort((a, b) => {
+      if (sort === 'old') {
+        return a.id - b.id;
+      } else {
+        return b.id - a.id;
+      }
+    });
+    setData(arr);
+  }, [sort, recommendSongs]);
 
   return (
     <>
@@ -21,11 +35,11 @@ const index = () => {
               top: '4px',
               left: '0px',
             }}
-            count={10}
+            count={data.length}
           />
           <SortingBox
-            activeSort='new'
-            onSort={() => {}}
+            activeSort={sort}
+            onSort={(sort) => setSort(sort)}
             position={{
               top: '0px',
               right: '0px',
@@ -33,7 +47,7 @@ const index = () => {
           />
         </IndexBox>
         <CardBoxWrap>
-          {tapeDummyData.map((item) => (
+          {data.map((item) => (
             <ItemBox
               onClick={() =>
                 router.push({

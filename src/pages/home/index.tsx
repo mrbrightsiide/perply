@@ -1,6 +1,7 @@
 import { getAllPlaylists, getSongCardList } from '@/apis';
 import { BasicButton } from '@/components/atom/BasicButton';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
+import { colorChips } from '@/components/card/ColorChip';
 import { TapeListPreview } from '@/components/home/TapeListPreview';
 import { IPlayList, ITape } from '@/types';
 import { css } from '@emotion/react';
@@ -112,7 +113,27 @@ const Index = () => {
                         : item.playlist_title_other || item.playlist_title}
                     </p>
                     <TransBtn>
-                      <span>{(item as any)?.total_songs || 0}개의 곡</span>
+                      <span
+                        css={css`
+                          color: ${colorChips.find(
+                            (color) =>
+                              color.name ===
+                              (idx === 0
+                                ? 'green'
+                                : idx === 1
+                                ? 'skyblue'
+                                : idx === 2
+                                ? 'purple'
+                                : idx === 3
+                                ? 'yellow'
+                                : idx === 4
+                                ? 'pink'
+                                : '')
+                          )?.color};
+                        `}
+                      >
+                        {(item as any)?.total_songs || 0}개의 곡
+                      </span>
                     </TransBtn>
                   </TapeInfo>
                   <Image
@@ -141,7 +162,7 @@ const Index = () => {
               <span
                 onClick={() =>
                   router.push({
-                    pathname: '/playlist/song',
+                    pathname: '/playlist/all',
                     query: { userId },
                   })
                 }
@@ -291,10 +312,6 @@ const TransBtn = styled.div`
   height: min-content;
   align-self: flex-end;
   background-color: #161616; /* Solid background color */
-
-  > span {
-    color: #fff;
-  }
 `;
 
 const OverFlowBox = styled.div`

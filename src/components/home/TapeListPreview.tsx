@@ -33,8 +33,8 @@ export const TapeListPreview = ({ data }: { data: ITape[] }) => {
                 <Image
                   src={`/images/main/small_tape/${item.color}.png`}
                   alt='tape'
-                  width={84}
-                  height={51}
+                  width={81}
+                  height={55}
                 />
               </TapeImg>
               <InfoWrap>

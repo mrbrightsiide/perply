@@ -15,11 +15,13 @@ const Index = () => {
       <ColoredBackground />
       <p
         css={css`
-          font-size: 16px;
+          font-size: 20px;
         `}
       >
-        음악 카드가 성공적으로 전송 되었어요
+        음악 카드가 성공적으로{'\n'}
+        전송 되었어요!
       </p>
+      <img src='/images/create/complete.png' alt='' width='100%' />
       <span>
         나는 어떤 음악인지 궁금하다면?{'\n'}지금 나의 플레이리스트를
         만들어보세요.
@@ -63,10 +65,10 @@ const Wrapper = styled.div`
   padding: 300px 20px 0 20px;
   text-align: center;
   color: ${({ theme }) => theme.color.black};
+  white-space: pre-line;
 
   p {
     text-align: center;
-    font-size: 16px;
     font-weight: ${({ theme }) => theme.fontWeight.semiBold};
     margin-bottom: 15px;
   }
@@ -77,6 +79,11 @@ const Wrapper = styled.div`
     font-weight: ${({ theme }) => theme.fontWeight.medium};
     white-space: pre-line;
     line-height: 24px;
+  }
+
+  img {
+    display: block;
+    margin-bottom: 20px;
   }
 `;
 

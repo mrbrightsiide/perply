@@ -48,5 +48,5 @@ const Wrapper = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: pointer !important;
 `;

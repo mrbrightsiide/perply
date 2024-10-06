@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { TapeListDetail } from '../home/TapeListDetail';
 import { ITape } from '@/types';
 import { css } from '@emotion/react';
+import { useEffect, useState } from 'react';
 
 export const SortingBox = ({
   onSort,
@@ -22,8 +23,24 @@ export const SortingBox = ({
         right: ${position?.right || '20px'};
       `}
     >
-      <span onClick={() => onSort('old')}>오래된순</span>
-      <span onClick={() => onSort('new')}>최신순</span>
+      <span
+        onClick={() => onSort('old')}
+        css={css`
+          color: ${activeSort === 'old' ? '#DCF333' : '#fff'};
+          font-weight: ${activeSort === 'old' ? 600 : 400};
+        `}
+      >
+        오래된순
+      </span>
+      <span
+        onClick={() => onSort('new')}
+        css={css`
+          color: ${activeSort === 'new' ? '#DCF333' : '#fff'};
+          font-weight: ${activeSort === 'new' ? 600 : 400};
+        `}
+      >
+        최신순
+      </span>
     </SortBox>
   );
 };
@@ -56,14 +73,21 @@ export const Folder = ({
 }) => {
   const router = useRouter();
   const { userId } = router.query as { userId: string };
-  // const { sortType, setSort } = usePlayListStore((state) => ({
-  //   sortType: state.sortType,
-  //   setSort: state.setSort,
-  // }));
+  const [sort, setSort] = useState<'old' | 'new'>('old');
+  const [sortedData, setSortedData] = useState<any[]>([]);
 
-  // useEffect(() => {
-  //   console.log(sortType);
-  // }, [sortType]);
+  useEffect(() => {
+    if (data) {
+      const sortedData = [...data].sort((a, b) => {
+        if (sort === 'old') {
+          return a.id - b.id;
+        } else {
+          return b.id - a.id;
+        }
+      });
+      setSortedData(sortedData);
+    }
+  }, [sort, data]);
 
   return (
     <>
@@ -82,8 +106,8 @@ export const Folder = ({
         <FolderCount count={count} />
         {data && data.length ? (
           <>
-            <SortingBox onSort={() => {}} activeSort='new' />
-            <TapeListDetail data={data} />
+            <SortingBox onSort={(sort) => setSort(sort)} activeSort={sort} />
+            <TapeListDetail data={sortedData} />
           </>
         ) : (
           <Content>
@@ -151,5 +175,6 @@ const SortBox = styled.div`
 
   > span {
     cursor: pointer;
+    font-size: 16px;
   }
 `;

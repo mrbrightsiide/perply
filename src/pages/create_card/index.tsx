@@ -36,11 +36,9 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (userId && typeof userId === 'string') {
-      (async () => {
-        await getAllPlaylists(userId).then((res) => setPlayListInfo(res));
-      })();
-    }
+    (async () => {
+      await getAllPlaylists(userId as any).then((res) => setPlayListInfo(res));
+    })();
   }, []);
 
   return (
@@ -68,16 +66,16 @@ const Index = () => {
         }
         onClick={async () => {
           // 카드 생성 API 호출
-          await createMusicCard('b61fb2', info.playlist_id, {
-            user_name: info.user_name,
-            singer: info.singer,
-            title: info.title,
-            youtube_url: info.youtube_url,
-            content: info.content,
-            alubmart_url: 'http://' + info.albumart_url,
-            color: colorChips[0].name,
-            playlist_id: info.playlist_id,
-          });
+          // await createMusicCard('b61fb2', info.playlist_id, {
+          //   user_name: info.user_name,
+          //   singer: info.singer,
+          //   title: info.title,
+          //   youtube_url: info.youtube_url,
+          //   content: info.content,
+          //   alubmart_url: 'http://' + info.albumart_url,
+          //   color: colorChips[0].name,
+          //   playlist_id: info.playlist_id,
+          // });
           // 카드 생성 성공 시, 카드 보내기 완료 페이지로 이동
           router.push({
             pathname: '/create_card/complete',
