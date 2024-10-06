@@ -11,10 +11,6 @@ class MyDocument extends Document {
             crossorigin
             href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css'
           />
-          <meta
-            http-equiv='Content-Security-Policy'
-            content='upgrade-insecure-requests'
-          />
         </Head>
         <body>
           <Main />

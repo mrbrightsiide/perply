@@ -13,7 +13,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 const Index = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const userId = session?.user?.uuid;
+  const userId =
+    router.query.userId === 'undefined'
+      ? session?.user?.uuid
+      : router.query.userId;
   const [playListPreview, setPlayListPreview] = useState<IPlayList[] | null>(
     null
   );
@@ -71,7 +74,7 @@ const Index = () => {
         <ColoredBackground color='#141414' />
         <Title>
           {session?.user.nickname}님의{'\n'}플리 보관함
-          {/* <button onClick={() => signOut()}>로그아웃</button> */}
+          <button onClick={() => signOut()}>로그아웃</button>
         </Title>
         <Swiper
           slidesPerView={1.14}
