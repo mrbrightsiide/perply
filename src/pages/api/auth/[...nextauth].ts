@@ -25,19 +25,29 @@ export const authOptions = {
       // 카카오 로그인 후 API로 사용자 정보를 받아서 토큰에 저장
       if (account && profile) {
         try {
-          const response = await axios.get(
-            'http://www.perply.site/account/kakao/login',
-            {
-              params: {
-                code: account.access_token, // 카카오에서 받은 토큰을 사용
-              },
-            }
-          );
+          // const response = await axios.get(
+          //   'http://www.perply.site/account/kakao/login',
+          //   {
+          //     params: {
+          //       code: account.access_token, // 카카오에서 받은 토큰을 사용
+          //     },
+          //   }
+          // );
+          const response = {
+            token:
+              'O5smzE4wk7vA39TtX9l31J33uTGjEM2JAAAAAQo8JCAAAAGSXC_IzRamEcnPBcmr',
+            user_id: 2,
+            user_uuid: 'b61fb2',
+            nickname: '시아',
+            profile_image:
+              'http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg',
+            created: false,
+          };
 
           const { user_id, user_uuid, nickname, profile_image, created } =
-            response.data;
+            response;
 
-          console.log('$$$ response.data: ', response.data);
+          console.log('$$$ response.data: ', response);
 
           // API 응답 데이터를 JWT에 포함
           token.userId = user_id;

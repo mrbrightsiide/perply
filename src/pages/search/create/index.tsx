@@ -39,7 +39,9 @@ const Index = () => {
       />
       <PageWrapper>
         <ColoredBackground />
-        <Icon></Icon>
+        <Icon>
+          <img src='/images/create/music.png' alt='' />
+        </Icon>
         <LabelWrapper>
           <TextInputWithLabel
             label='노래 제목'

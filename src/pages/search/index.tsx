@@ -57,7 +57,9 @@ export default function Search() {
           <CreateMusicBox>
             <CreateMusicTxt>노래를 직접 등록하고 싶으신가요?</CreateMusicTxt>
             <CreateMusicBtn onClick={() => router.push('/search/create')}>
-              <span className='icon'></span>
+              <span className='icon'>
+                <img src='/images/plus_.png' alt='' />
+              </span>
               <span className='title'>직접 음악 추가하기</span>
             </CreateMusicBtn>
           </CreateMusicBox>
@@ -145,7 +147,10 @@ const CreateMusicBtn = styled.div`
     width: 20px;
     height: 20px;
     display: inline-block;
-    background-color: pink;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
   span.title {
     display: inline-block;

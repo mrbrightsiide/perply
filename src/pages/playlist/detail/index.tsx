@@ -26,7 +26,7 @@ const Index = () => {
 
   return (
     <>
-      <BackBtnHeader background='#141414' />
+      <BackBtnHeader background='#141414' whiteArrow />
       <ColoredBackground color='#141414' />
       <Wrapper>
         <Title>{playlistDetail?.playlist.playlist_title}</Title>
@@ -34,16 +34,6 @@ const Index = () => {
           친구들이 나를 떠올리며 보내준 노래를
           {'\n'}모아 만든 플레이리스트에요
         </Desc>
-        <img
-          alt=''
-          css={css`
-            width: 281px;
-            height: 183px;
-            right: 0;
-            position: absolute;
-            z-index: -1;
-          `}
-        />
         <Folder
           count={playlistDetail?.recommended_songs?.length || 0}
           data={playlistDetail?.recommended_songs}

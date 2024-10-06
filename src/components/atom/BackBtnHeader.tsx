@@ -9,12 +9,14 @@ export const BackBtnHeader = ({
   onGoBack,
   background,
   color = '#111',
+  whiteArrow,
 }: {
   title?: string;
   subContent?: React.ReactNode;
   onGoBack?: () => void;
   background?: string;
   color?: string;
+  whiteArrow?: boolean;
 }) => {
   const router = useRouter();
 
@@ -26,16 +28,13 @@ export const BackBtnHeader = ({
       `}
     >
       <BackAnchor
-        css={css`
-          border: 1px solid black;
-        `}
         onClick={(e) => {
           e.preventDefault();
           onGoBack ? onGoBack() : router.back();
         }}
         href='/'
       >
-        {/* <img src='' alt='' /> */}
+        <img src={`/images/back${whiteArrow ? '_wh' : ''}.png`} alt='' />
       </BackAnchor>
       {title && <Title>{title}</Title>}
       {subContent}
@@ -47,10 +46,16 @@ const BackAnchor = styled.a`
   display: block;
   position: absolute;
   left: 20px;
-  background-color: red;
   color: white;
   width: 28px;
   height: 28px;
+  object-fit: contain;
+
+  img {
+    width: 100%;
+    height: 100%;
+    margin-left: -20px;
+  }
 `;
 
 const Title = styled.p`

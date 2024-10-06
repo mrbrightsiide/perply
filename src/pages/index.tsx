@@ -41,7 +41,7 @@ export default function Home() {
       <BasicButton
         onClick={() =>
           signIn('kakao', {
-            callbackUrl: `/home/?userId=${session?.user.uuid}`,
+            callbackUrl: `/home/?userId=b61fb2`,
           })
         }
         text='카카오로 시작하기'
@@ -82,7 +82,8 @@ const Wrapper = styled.div`
 
 const Bg = styled.img`
   width: auto;
-  height: 99%;
+  height: calc(100vh - 47px);
   position: absolute;
   z-index: -1;
+  overflow: hidden;
 `;

@@ -37,7 +37,11 @@ export const CreateForm = ({
           <MusicWrapper>
             <AlbumCover>
               <img
-                src={'http://' + info.albumart_url}
+                src={
+                  info.albumart_url
+                    ? 'http://' + info.albumart_url
+                    : '/images/create/music.png'
+                }
                 width='100%'
                 height='100%'
                 alt='album cover'

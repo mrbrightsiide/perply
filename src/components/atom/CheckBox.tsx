@@ -33,5 +33,9 @@ const Box = styled.input<{
 }>`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  background-color: ${({ checked }) => (checked ? '#FFD600' : 'skyblue')};
+  /* background-color: ${({ checked }) => (checked ? '#FFD600' : 'skyblue')}; */
+  background-image: ${({ checked }) =>
+    checked
+      ? 'url(/images/checkbox_checked.png)'
+      : 'url(/images/checkbox.png)'};
 `;

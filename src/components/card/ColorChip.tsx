@@ -5,21 +5,23 @@ import 'swiper/css';
 
 export const ColorChip = ({
   selectedColor,
+  onClickColor,
 }: {
-  selectedColor: { name: string; color: string };
+  selectedColor: string;
+  onClickColor: (name: string) => void;
 }) => {
   return (
-    <Swiper spaceBetween={12} slidesPerView={7}>
+    <Swiper spaceBetween={22} slidesPerView={6}>
       {colorChips.map((chip) => (
         <SwiperSlide key={chip.name}>
           <BG
-            clicked={selectedColor.name === chip.name}
-            onClick={() => alert('clicked')}
+            clicked={selectedColor === chip.name}
+            onClick={() => onClickColor(chip.name)}
           >
             <Chip
               key={chip.name}
               color={chip.color}
-              clicked={selectedColor.name === chip.name}
+              clicked={selectedColor === chip.name}
             />
           </BG>
         </SwiperSlide>

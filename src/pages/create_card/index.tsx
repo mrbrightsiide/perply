@@ -52,8 +52,13 @@ const Index = () => {
       />
       <ColoredBackground color='#f4f5f5' />
       <PageWrapper>
-        <Tape />
-        <ColorChip selectedColor={colorChips[0]} />
+        <Tape>
+          <img src={`/images/create/${info.color}.png`} alt='' />
+        </Tape>
+        <ColorChip
+          selectedColor={info.color as any}
+          onClickColor={(name) => setInfo({ ...info, color: name as any })}
+        />
         <CreateForm info={info} setInfo={setInfo} playListInfo={playListInfo} />
       </PageWrapper>
       <FloatButton
@@ -94,8 +99,12 @@ const Tape = styled.div`
   width: 273px;
   height: 168px;
   border-radius: 16px;
-  background-color: pink;
   margin: 40px auto 32px auto;
+  object-fit: cover;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export default Index;

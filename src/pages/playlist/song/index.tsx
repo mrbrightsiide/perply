@@ -86,7 +86,17 @@ const index = () => {
                 bottom: 0,
               }}
             />
-            <AlbumComver></AlbumComver>
+            <AlbumComver>
+              <img
+                src={song?.albumart_url}
+                alt=''
+                css={css`
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                `}
+              />
+            </AlbumComver>
             <div>
               <SongTitle>{song?.title}</SongTitle>
               <Artist>{song?.singer}</Artist>
@@ -111,6 +121,8 @@ const index = () => {
           background={
             colorChips.find((color) => color.name === song?.color)
               ?.songBgColor ||
+            colorChips.find((color) => color.name === song?.color)
+              ?.listBgColor ||
             colorChips.find((color) => color.name === song?.color)?.color
           }
         />
@@ -118,6 +130,7 @@ const index = () => {
       <ColoredBackground
         color={
           colorChips.find((color) => color.name === song?.color)?.songBgColor ||
+          colorChips.find((color) => color.name === song?.color)?.listBgColor ||
           colorChips.find((color) => color.name === song?.color)?.color
         }
       />
@@ -126,7 +139,7 @@ const index = () => {
           <span>{song?.user_name}</span>
           님이 선택한
         </Title>
-        <SubTitle>{}님의 분위기와 어울리는 노래</SubTitle>
+        <SubTitle>{session?.user.nickname}님의 분위기와 어울리는 노래</SubTitle>
         <ContentBox>
           <InnerShadow>
             <InnerShadow2>
@@ -167,14 +180,15 @@ const index = () => {
                 />
                 {youtubeOpen && (
                   <div>
-                    <span onClick={() => setYoutubeOpen(false)}>접기</span>
+                    <span onClick={() => setYoutubeOpen(false)}>닫기</span>
                     <Line />
-                    <iframe
+                    {song?.youtube_url}
+                    {/* <iframe
                       src={song?.youtube_url}
                       width='100%'
                       height={250}
                       frameBorder={0}
-                    />
+                    /> */}
                   </div>
                 )}
                 {song?.content && (
@@ -196,7 +210,7 @@ const index = () => {
           <FloatButton
             title='내 플리 만들기'
             style={{
-              bg: theme.primary[600],
+              bg: colorChips.find((color) => color.name === song?.color)?.color,
               color: '#fff',
               maxWidth: '161px',
               right: '51%',
@@ -259,6 +273,7 @@ const Msg = styled.div`
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   line-height: 20px;
+  margin-top: 20px;
 `;
 
 const ContentBox = styled.div`

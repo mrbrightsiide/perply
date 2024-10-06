@@ -43,7 +43,7 @@ const Index = () => {
           text='나도 만들기'
           onClick={() =>
             signIn('kakao', {
-              callbackUrl: `/home/?userId=${session?.user.uuid}`,
+              callbackUrl: `/home/?userId=b61fb2`,
             })
           }
         />

@@ -3,8 +3,9 @@ import { BasicButton } from '@/components/atom/BasicButton';
 import { ColoredBackground } from '@/components/atom/ColoredBackground';
 import { TapeListPreview } from '@/components/home/TapeListPreview';
 import { IPlayList, ITape } from '@/types';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -67,7 +68,17 @@ const Index = () => {
             alt='logo'
             style={{ maxWidth: '122px', marginLeft: '-30px' }}
           />
-          {isMyHome ? <span>마이페이지</span> : <span>로그인</span>}
+          {isMyHome ? (
+            <span
+              css={css`
+                cursor: pointer;
+              `}
+            >
+              MY
+            </span>
+          ) : (
+            <span>로그인</span>
+          )}
         </Header>
       </PaddingWrap>
       <Wrapper>
@@ -189,6 +200,7 @@ const Title = styled.h1`
 
 const Wrapper = styled.div`
   padding-top: 40px;
+  max-height: calc(100vh - 56px);
 `;
 
 const Tape = styled.div`
@@ -287,7 +299,7 @@ const TransBtn = styled.div`
 
 const OverFlowBox = styled.div`
   overflow-y: auto;
-  max-height: 310px;
+  max-height: calc(100vh - 56px - 480px);
   /* scrollbar hide */
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

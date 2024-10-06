@@ -33,7 +33,7 @@ export const SearchMusicInput = ({
           await fetchMusicSearch();
         }}
       >
-        {/* <img src='' /> */}
+        <img src='/images/search.png' alt='search icon' />
       </button>
     </SearchInput>
   );
@@ -50,5 +50,11 @@ const SearchInput = styled.div`
   input {
     width: 100%;
     color: #111;
+  }
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 `;
